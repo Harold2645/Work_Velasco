@@ -1,0 +1,53 @@
+from flask import Flask,redirect,render_template,request
+from flaskext.mysql import MySQL
+from datetime import datetime
+from Deportistas import deportistas
+
+app = Flask(__name__)
+mysql = MySQL()
+
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_PORT'] = 3306
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_DB'] = 'trabajo_velasco'
+mysql.init_app(app)
+misDeportistas = deportistas(mysql)
+
+@app.route('/')
+def index():
+    resultado = misDeportistas.consultar()
+    return render_template('index.html',res=resultado)
+
+@app.route('/agregardeportista')
+def agregardeportista():
+    return render_template('registrar.html')
+
+@app.route("/guardardeportistas", methods=['POST'])
+def guardardeportistas():
+    id = request.form['documento']
+    nombre = request.form['nombre']
+    estatura = request.form['estatura']
+    peso = request.form['peso']
+    nacimiento = request.form['nacimiento']
+    ahora = datetime.now()
+    creado = ahora.strftime("%Y%m%d%H%M%S")
+    misDeportistas.agregar([id,nombre,estatura,peso,nacimiento,creado])
+    return redirect('/')
+
+@app.route('/borrarardeportista/<documento>')
+def borrararticulo(documento):
+    misDeportistas.borrar(documento)
+    return redirect('/')
+
+
+
+
+
+
+
+
+
+
+if __name__=='__main__':
+    app.run(host='0.0.0.0',debug=True,port=2645)

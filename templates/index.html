@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de deportistas</title>
+</head>
+<body>
+    <a href="/agregardeportista">Agregar un nuevo deportista</a>
+    <br><br>
+    <table border>
+        <thead>
+            <tr>
+                <th>Documento</th>
+                <th>Nombre</th>
+                <th>Estatura</th>
+                <th>Peso</th>
+                <th>Fechas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dep in res %}
+                <tr>
+                    <td>{{dep[0]}}</td>
+                    <td>{{dep[1]}}</td>
+                    <td>{{dep[2]}}</td>
+                    <td>{{dep[3]}}</td>
+                    <td>{{dep[4]}}</td>
+                    <td>
+                        <a href="editardeportista/{{dep[0]}}">Editar</a>
+                    </td>
+                    <td>
+                        <a onclick="return confirm('¿Seguro elimina este artículo?')" href="borrarardeportista/{{dep[0]}}">Eliminar</a>
+                    </td>    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+</body>
+
+</html>
