@@ -36,16 +36,25 @@ def guardardeportistas():
     return redirect('/')
 
 @app.route('/borrarardeportista/<documento>')
-def borrararticulo(documento):
+def borrardeportista(documento):
     misDeportistas.borrar(documento)
     return redirect('/')
 
-
-
-
-
-
-
+@app.route('/editardeportista/<documento>')
+def editardeportista(documento):
+        deportista = misDeportistas.buscar(documento)
+        return render_template("editar.html",dep=deportista[0])
+    
+@app.route('/actualizardeportista',methods=['POST'])
+def actualizadeportista():
+    documento = request.form['documento']
+    nombre = request.form['nombre']
+    estatura = request.form['estatura']
+    peso = request.form['peso']
+    nacimiento = request.form['nacimiento']
+    dep = [documento,nombre,estatura,peso,nacimiento]
+    misDeportistas.modificar(dep)
+    return redirect("/")
 
 
 

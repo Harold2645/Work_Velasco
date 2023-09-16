@@ -27,3 +27,16 @@ class deportistas:
         sql = f"UPDATE deportista SET activo=0 WHERE documento={documento}"
         self.cursor.execute(sql)
         self.conexion.commit()
+        
+    def buscar(self,documento):
+        sql = f"SELECT * FROM deportista WHERE documento={documento}"
+        self.cursor.execute(sql)
+        resultado = self.cursor.fetchall()
+        self.conexion.commit()
+        return resultado
+    
+    def accion(self,accion):
+        sql = f"INSERT INTO operaciones (documento,operacion,fecha_o)\
+            VALUES ('{accion[1]}','{accion[2]}','{accion[3]}')"
+        self.cursor.execute(sql)
+        self.conexion.commit()
