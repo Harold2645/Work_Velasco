@@ -37,6 +37,6 @@ class deportistas:
     
     def accion(self,accion):
         sql = f"INSERT INTO operaciones (documento,operacion,fecha_o)\
-            VALUES ('{accion[1]}','{accion[2]}','{accion[3]}')"
+            VALUES ('{accion[0]}','{accion[1]}','{accion[2]}')"
         self.cursor.execute(sql)
         self.conexion.commit()

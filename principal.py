@@ -33,11 +33,21 @@ def guardardeportistas():
     ahora = datetime.now()
     creado = ahora.strftime("%Y%m%d%H%M%S")
     misDeportistas.agregar([id,nombre,estatura,peso,nacimiento,creado])
+    operaciones = "Agregado"
+    ahora = datetime.now()
+    Fecha_o = ahora.strftime("%Y%m%d%H%M%S")
+    acc = [id,operaciones,Fecha_o]
+    misDeportistas.accion(acc)
     return redirect('/')
 
 @app.route('/borrarardeportista/<documento>')
 def borrardeportista(documento):
     misDeportistas.borrar(documento)
+    operaciones = "Borrar"
+    ahora = datetime.now()
+    Fecha_o = ahora.strftime("%Y%m%d%H%M%S")
+    acc = [documento,operaciones,Fecha_o]
+    misDeportistas.accion(acc)
     return redirect('/')
 
 @app.route('/editardeportista/<documento>')
@@ -54,6 +64,11 @@ def actualizadeportista():
     nacimiento = request.form['nacimiento']
     dep = [documento,nombre,estatura,peso,nacimiento]
     misDeportistas.modificar(dep)
+    operaciones = "Editar"
+    ahora = datetime.now()
+    Fecha_o = ahora.strftime("%Y%m%d%H%M%S")
+    acc = [documento,operaciones,Fecha_o]
+    misDeportistas.accion(acc)
     return redirect("/")
 
 
